@@ -1,67 +1,53 @@
 module.exports = {
-  parser: '@babel/eslint-parser',
-  env: {
-    browser: true,
-    commonjs: true,
-    es6: true,
-  },
-  extends: [
-    'eslint:recommended',
-    'plugin:flowtype/recommended',
-    'plugin:react/recommended',
-  ],
-  parserOptions: {
-    ecmaFeatures: {
-      impliedStrict: true,
-      experimentalObjectRestSpread: true,
-      jsx: true,
+    env: {
+        browser: true,
+        es2022: true,
+        es6: true,
+        node: true,
     },
-    sourceType: 'module',
-  },
-  plugins: [
-    'flowtype',
-    'react',
-  ],
-  rules: {
-    // eslint rules
-    'no-console': 'warn',
-    'no-unused-vars': 'warn',
-    'semi': 'warn',
-
-    // eslint-plugin-flowtype rules
-    'flowtype/define-flow-type': 'warn',
-    'flowtype/require-valid-file-annotation': 'warn',
-    'flowtype/semi': 'warn',
-    'flowtype/use-flow-type': 'warn',
-
-    // eslint-plugin-react rules
-    'react/forbid-foreign-prop-types': ['warn', { allowInPropTypes: true }],
-    'react/jsx-no-comment-textnodes': 'warn',
-    'react/jsx-no-duplicate-props': 'warn',
-    'react/jsx-no-target-blank': 'warn',
-    'react/jsx-no-undef': 'error',
-    'react/jsx-pascal-case': [
-      'warn',
-      {
-        allowAllCaps: true,
-        ignore: [],
-      }
+    extends: [
+        'plugin:react-hooks/recommended',
+        'plugin:react/recommended',
+        'plugin:@typescript-eslint/eslint-recommended',
+        'eslint:recommended',
     ],
-    'react/jsx-uses-react': 'warn',
-    'react/jsx-uses-vars': 'warn',
-    'react/no-danger-with-children': 'warn',
-    'react/no-direct-mutation-state': 'warn',
-    'react/no-is-mounted': 'warn',
-    'react/no-typos': 'error',
-    'react/no-unescaped-entities': 'warn',
-    'react/prop-types': 'warn',
-    'react/react-in-jsx-scope': 'error',
-    'react/require-render-return': 'error',
-    'react/style-prop-object': 'warn'
-  },
-  settings: {
-    react: {
-      version: 'detect'
-    }
-  }
+    parser: '@typescript-eslint/parser',
+    parserOptions: {
+        ecmaFeatures: {
+            jsx: true,
+        },
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+    },
+    ignorePatterns: ['node_modules', 'build'],
+    plugins: ['react', 'import', 'unused-imports', '@typescript-eslint'],
+    rules: {
+        'no-undef': 2,
+        'react/display-name': 0,
+        'react/prop-types': 'off',
+        'react/react-in-jsx-scope': 'off',
+        'react/jsx-props-no-spreading': 'off',
+        'react/jsx-filename-extension': ['error', { extensions: ['.jsx', 'tsx'] }],
+        'no-use-before-define': 'off',
+        'no-shadow': 'off',
+        'import/named': 'error',
+        'import/export': 'error',
+        'import/no-named-as-default': 'error',
+        'import/no-named-as-default-member': 'error',
+        'import/no-deprecated': 'error',
+        'import/first': 'error',
+        'import/no-duplicates': 'error',
+        'import/order': ['error', { groups: [['builtin', 'external', 'internal']] }],
+        'import/newline-after-import': 'error',
+        'import/prefer-default-export': 'off',
+        'import/no-self-import': 'error',
+        'import/no-cycle': ['error', { maxDepth: 1 }],
+        'import/no-useless-path-segments': 'error',
+        'unused-imports/no-unused-imports': 'error',
+    },
+    settings: {
+        react: {
+            version: 'detect',
+        },
+    },
 };

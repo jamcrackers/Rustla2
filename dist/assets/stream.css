@@ -1,0 +1,23 @@
+.advanced-stream-warning {
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  height: 100%; }
+  .advanced-stream-warning:before {
+    content: ' ';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    -webkit-filter: blur(2px);
+            filter: blur(2px);
+    background-image: url("/image/pepos.png");
+    background-repeat: no-repeat;
+    background-position: bottom left;
+    width: 100%;
+    height: 100%;
+    z-index: 1; }
+  .advanced-stream-warning button, .advanced-stream-warning h2, .advanced-stream-warning p, .advanced-stream-warning span {
+    z-index: 2;
+    position: relative; }
+

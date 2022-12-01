@@ -1,0 +1,101 @@
+.streams-heading {
+  text-align: center; }
+
+.streams-layout {
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
+
+.stream-admin-menu-container {
+  position: absolute;
+  z-index: 1;
+  margin: 5px 0 0 5px; }
+
+.stream-admin-menu {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column; }
+
+.stream-thumbnail {
+  border: 1px solid #5D5D5D;
+  background-color: #222;
+  display: block;
+  margin-top: 1em;
+  overflow: hidden;
+  position: relative; }
+  .stream-thumbnail:before {
+    background-size: contain;
+    background-repeat: no-repeat;
+    content: "";
+    display: block;
+    -webkit-filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.5));
+            filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.5));
+    padding-top: 10%;
+    position: absolute;
+    right: 2%;
+    top: 4%;
+    width: 10%;
+    z-index: 1; }
+  .stream-thumbnail.stream-thumbnail-angelthump:before {
+    background-image: url(/image/angelthump.png);
+    width: 20%; }
+  .stream-thumbnail.stream-thumbnail-twitch:before, .stream-thumbnail.stream-thumbnail-twitch-vod:before {
+    background-image: url(/image/twitch.png); }
+  .stream-thumbnail.stream-thumbnail-youtube:before {
+    background-image: url(/image/youtube.png); }
+  .stream-thumbnail .thumbnail-image {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: block;
+    height: 0;
+    padding-top: 56.25%;
+    overflow: hidden; }
+  .stream-thumbnail .thumbnail-image-nsfw {
+    -webkit-filter: blur(10px);
+            filter: blur(10px); }
+  .stream-thumbnail .thumbnail-default-image {
+    background-color: #111;
+    background-image: url(/image/jigglymonkey.png);
+    background-size: 50%; }
+  .stream-thumbnail .stream-caption {
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    background-color: #222;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex; }
+    .stream-thumbnail .stream-caption .thumbnail-text {
+      border-left-style: solid;
+      border-left-width: 5px;
+      -webkit-box-flex: 1;
+          -ms-flex: 1;
+              flex: 1;
+      overflow: hidden;
+      padding: 9px;
+      text-overflow: ellipsis;
+      white-space: nowrap; }
+    .stream-thumbnail .stream-caption .badge {
+      -webkit-box-align: center;
+          -ms-flex-align: center;
+              align-items: center;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      height: 2em;
+      margin-right: 9px; }
+      .stream-thumbnail .stream-caption .badge .glyphicon {
+        margin-left: 0.2em; }
+  .stream-thumbnail:hover {
+    text-decoration: none; }
+    .stream-thumbnail:hover .thumbnail-text {
+      text-decoration: underline; }
+    .stream-thumbnail:hover .thumbnail-default-image {
+      -webkit-animation: jiggle_background 100ms infinite;
+              animation: jiggle_background 100ms infinite; }
+

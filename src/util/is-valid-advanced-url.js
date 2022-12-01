@@ -12,14 +12,13 @@
  * @returns {boolean} Returns `true` if `url` is a valid URL for an advanced
  *  stream, else `false`.
  */
-function isValidAdvancedUrl(URLimpl: Class<URL>, url: string): boolean {
-  try {
-    return ['http:', 'https:'].includes(new URLimpl(url).protocol);
-  }
-  // Catch the `TypeError` which indicates that `url` is not a valid URL.
-  catch (e) {
-    return false;
-  }
+function isValidAdvancedUrl(URLimpl, url) {
+    try {
+        return ['http:', 'https:'].includes(new URLimpl(url).protocol);
+    } catch (e) {
+        // Catch the `TypeError` which indicates that `url` is not a valid URL.
+        return false;
+    }
 }
 
 /**
@@ -29,8 +28,8 @@ function isValidAdvancedUrl(URLimpl: Class<URL>, url: string): boolean {
  * @param {URL} URLimpl Implementation of the `URL` class.
  * @returns {Function} Returns `isValidAdvancedUrl` bounded to `URLimpl`.
  */
-function createIsValidAdvancedUrl(URLimpl: Class<URL>): Function {
-  return isValidAdvancedUrl.bind(null, URLimpl);
+function createIsValidAdvancedUrl(URLimpl) {
+    return isValidAdvancedUrl.bind(null, URLimpl);
 }
 
 // Not using `export default` here because the rest of the codebase will be

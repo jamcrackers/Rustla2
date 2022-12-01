@@ -1,0 +1,1 @@
+function e(r,t){try{return t(r)}catch(n){if(n instanceof TypeError){if(i.test(n))return null;if(u.test(n))return}throw n}}var i=/^null | null$|^[^(]* null /i,u=/^undefined | undefined$|^[^(]* undefined /i;e.default=e;var d=e;const l=d;export{l as i};
