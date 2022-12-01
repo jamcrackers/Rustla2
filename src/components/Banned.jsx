@@ -1,20 +1,12 @@
-// @flow
+import MainLayout from "./MainLayout";
 
-import React from 'react';
-import type { BrowserHistory } from 'history';
-
-import MainLayout from './MainLayout';
-
-type Props = {
-  history: BrowserHistory
-};
-
-const Banned = ({ history }: Props) =>
+const Banned = ({ history }) => (
   <MainLayout history={history}>
-    <div className='text-center'>
+    <div className="text-center">
       <h1>Stream Banned</h1>
-      <img src='/image/beand.jpg' className='img-top-margin' />
+      <img src="/image/beand.jpg" className="img-top-margin" />
     </div>
-  </MainLayout>;
+  </MainLayout>
+);
 
 export default Banned;

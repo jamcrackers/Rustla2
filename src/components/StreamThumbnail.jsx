@@ -1,33 +1,32 @@
 /* global THUMBNAIL_REFRESH_INTERVAL */
 
-import React from 'react';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import idx from 'idx';
-import lifecycle from 'recompose/lifecycle';
-import PropTypes from 'prop-types';
+import React from "react";
+import { compose } from "redux";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import idx from "idx";
+import lifecycle from "recompose/lifecycle";
+import PropTypes from "prop-types";
 
-import { fetchProfileIfLoggedIn } from '../actions';
-import { generateColor } from '../util/color';
-import StreamAdminMenu from './StreamAdminMenu';
+import { fetchProfileIfLoggedIn } from "../actions";
+import { generateColor } from "../util/color";
+import StreamAdminMenu from "./StreamAdminMenu";
 
-import '../css/StreamThumbnail';
+import "../css/StreamThumbnail.scss";
 
 const getStreamTitle = (overrustle_id, channel, title, service) => {
   switch (service) {
-    case 'angelthump': {
-      const presenter = overrustle_id && overrustle_id !== channel
-        ? `${overrustle_id} via ${channel}`
-        : channel;
-      const content = title
-        ? `presents ${title}`
-        : 'on angelthump';
+    case "angelthump": {
+      const presenter =
+        overrustle_id && overrustle_id !== channel
+          ? `${overrustle_id} via ${channel}`
+          : channel;
+      const content = title ? `presents ${title}` : "on angelthump";
       return `${presenter} ${content}`;
     }
-    case 'twitch-vod':
+    case "twitch-vod":
       return title ? `${channel}: ${title}` : `${channel} on twitch`;
-    case 'twitch':
+    case "twitch":
       return title ? `${channel} playing ${title}` : `${channel} on twitch`;
     default:
       return title ? title : `${channel} on ${service}`;
@@ -54,13 +53,15 @@ const StreamThumbnail = ({
   const url = overrustle_id ? overrustle_id : `${service}/${channel}`;
   const text = getStreamTitle(overrustle_id, channel, title, service);
 
-  let thumbnailProps = { className: 'thumbnail-image thumbnail-default-image' };
+  let thumbnailProps = { className: "thumbnail-image thumbnail-default-image" };
   if (thumbnail) {
-    const epochMinute = Math.floor(Date.now() / (THUMBNAIL_REFRESH_INTERVAL || 60000));
+    const epochMinute = Math.floor(
+      Date.now() / (THUMBNAIL_REFRESH_INTERVAL || 60000)
+    );
     const thumbnailUrl = live ? `${thumbnail}?${epochMinute}` : thumbnail;
 
     thumbnailProps = {
-      className: `thumbnail-image ${nsfw ? 'thumbnail-image-nsfw' : ''}`,
+      className: `thumbnail-image ${nsfw ? "thumbnail-image-nsfw" : ""}`,
       style: { backgroundImage: `url(${thumbnailUrl})` },
     };
   }
@@ -84,17 +85,19 @@ const StreamThumbnail = ({
       <Link
         className={`stream-thumbnail stream-thumbnail-${service}`}
         title={text}
-        to={url}>
+        to={url}
+      >
         <div {...thumbnailProps} />
-        <div className='stream-caption'>
-          <span className='thumbnail-text' style={{borderLeftColor: color}}>
+        <div className="stream-caption">
+          <span className="thumbnail-text" style={{ borderLeftColor: color }}>
             {text}
           </span>
           <span
-            title={afk_rustlers ? `${afk_rustlers} afk` : ''}
-            className={`badge badge-${live ? 'success' : 'danger'}`}>
+            title={afk_rustlers ? `${afk_rustlers} afk` : ""}
+            className={`badge badge-${live ? "success" : "danger"}`}
+          >
             {rustlers.toLocaleString()}
-            <span className='glyphicon glyphicon-user' />
+            <span className="glyphicon glyphicon-user" />
           </span>
         </div>
       </Link>
@@ -122,15 +125,15 @@ StreamThumbnail.propTypes = {
 export default compose(
   connect(
     (state, ownProps) => ({
-      isAdmin: idx(state, _ => _.self.profile.data.is_admin),
+      isAdmin: idx(state, (_) => _.self.profile.data.is_admin),
     }),
     {
       fetchProfileIfLoggedIn,
-    },
+    }
   ),
   lifecycle({
     componentDidMount() {
       this.props.fetchProfileIfLoggedIn();
     },
-  }),
+  })
 )(StreamThumbnail);

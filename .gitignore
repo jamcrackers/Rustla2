@@ -6,3 +6,4 @@ public/index.html
 *.log
 *.sqlite
 .vscode
+.git

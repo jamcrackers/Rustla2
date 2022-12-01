@@ -1,10 +1,3 @@
-// @flow
-
-import Loadable from './Loadable';
-
-
-const AsyncProfile = Loadable({
-  loader: () => import(/* webpackChunkName: "profile" */ './Profile'),
-});
+const AsyncProfile = await import("./Profile");
 
 export default AsyncProfile;

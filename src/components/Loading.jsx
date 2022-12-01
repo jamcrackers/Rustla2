@@ -1,10 +1,4 @@
-// @flow
-
-import React from 'react';
-import type { LoadingProps } from 'react-loadable';
-
-
-const Loading = ({ error, pastDelay, timedOut }: LoadingProps) => {
+const Loading = ({ error, pastDelay, timedOut }) => {
   // If the loader errored, display generic error message.
   if (error) {
     return <p>Error!</p>;
@@ -17,7 +11,7 @@ const Loading = ({ error, pastDelay, timedOut }: LoadingProps) => {
 
   // If the loader has taken long enough, then show the loading screen.
   if (pastDelay) {
-    return <div className='jiggle-background fill-percentage' />;
+    return <div className="jiggle-background fill-percentage" />;
   }
 
   // Loader has only just started; do not display anything yet.

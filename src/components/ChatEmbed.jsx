@@ -1,17 +1,5 @@
-/* global CHAT2_DOMAIN, CHAT2_URL, CHAT_URL */
-
-import React from 'react';
-import PropTypes from 'prop-types';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
-import lifecycle from 'recompose/lifecycle';
-import idx from 'idx';
-
-import { toggleChat, CHAT_HOST_SERVICE, CHAT_HOST_STRIMS, CHAT_HOST_DGG } from '../actions';
-import supportedChats, { supportedChatServices } from '../util/supported-chats';
-import Chat from './Chat';
-import LazyLoadOnce from './LazyLoadOnce';
-
+import supportedChats from "../util/supported-chats";
+import Chat from "./Chat";
 
 const ChatEmbed = ({
   channel,
@@ -22,66 +10,35 @@ const ChatEmbed = ({
   isServiceChat,
 }) => {
   let src;
-  if (channel && service && typeof supportedChats[service] === 'function') {
+  if (channel && service && typeof supportedChats[service] === "function") {
     src = supportedChats[service](channel) || src;
   }
 
   return (
-    <div style={{height: "inherit"}}>
+    <div style={{ height: "inherit" }}>
       <Chat
         onClose={onClose}
-        style={{ display: isStrimsChat ? undefined : 'none' }}
-        src={window.location.toString() === CHAT2_DOMAIN ? CHAT2_URL : CHAT_URL}
-        />
-      <LazyLoadOnce visible={isDggChat}>
+        style={{ display: isStrimsChat ? undefined : "none" }}
+        src={
+          window.location.toString() === import.meta.env.CHAT2_DOMAIN
+            ? import.meta.env.CHAT2_URL
+            : import.meta.env.CHAT_URL
+        }
+      />
+      <Chat
+        onClose={onClose}
+        style={{ display: isDggChat ? undefined : "none" }}
+        src="https://destiny.gg/embed/chat"
+      />
+      {src ? (
         <Chat
           onClose={onClose}
-          style={{ display: isDggChat ? undefined : 'none' }}
-          src='https://destiny.gg/embed/chat'
-          />
-      </LazyLoadOnce>
-      {
-        src ?
-          <LazyLoadOnce visible={isServiceChat}>
-            <Chat
-              onClose={onClose}
-              style={{ display: isServiceChat ? undefined : 'none' }}
-              src={src}
-              />
-          </LazyLoadOnce>
-        : null
-      }
+          style={{ display: isServiceChat ? undefined : "none" }}
+          src={src}
+        />
+      ) : null}
     </div>
   );
 };
 
-ChatEmbed.propTypes = {
-  isDggChat: PropTypes.bool,
-  isStrimsChat: PropTypes.bool,
-  isServiceChat: PropTypes.bool,
-  channel: PropTypes.string,
-  onClose: PropTypes.func,
-  service: PropTypes.string,
-};
-
-export default compose(
-  connect(
-    state => ({
-      isDggChat: state.ui.chatHost === CHAT_HOST_DGG,
-      isStrimsChat: state.ui.chatHost === CHAT_HOST_STRIMS,
-      isServiceChat: state.ui.chatHost === CHAT_HOST_SERVICE,
-      channel: idx(state, _ => _.streams[state.stream].channel),
-      service: idx(state, _ => _.streams[state.stream].service),
-    }),
-    {
-      toggleChat,
-    },
-  ),
-  lifecycle({
-    componentWillMount() {
-      if (this.props.isServiceChat && !supportedChatServices.has(this.props.service)) {
-        this.props.toggleChat(false);
-      }
-    },
-  }),
-)(ChatEmbed);
+export default ChatEmbed;

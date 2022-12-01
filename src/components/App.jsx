@@ -1,31 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect, Provider } from 'react-redux';
-import { compose } from 'redux';
-import { lifecycle } from 'recompose';
+import RoutesWithChat from "./RoutesWithChat";
+import { init } from "../actions/websocket";
+import "../css/main.scss";
 
-import { login } from '../actions';
-import RoutesWithChat from './RoutesWithChat';
+function App() {
+  if (import.meta.hot) {
+    init();
+    import.meta.hot.send("my:from-client", { msg: "Hey!" });
+  }
 
-const App = ({ store }) =>
-  <Provider store={store}>
-    <RoutesWithChat />
-  </Provider>;
+  console.log("import.meta.env: ", import.meta.env);
+  return <RoutesWithChat />;
+}
 
-App.propTypes = {
-  store: PropTypes.object.isRequired,
-};
-
-export default compose(
-  connect(
-    null,
-    {
-      login,
-    },
-  ),
-  lifecycle({
-    componentDidMount() {
-      this.props.login();
-    },
-  }),
-)(App);
+export default App;

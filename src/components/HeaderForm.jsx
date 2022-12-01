@@ -1,25 +1,9 @@
-// @flow
-
-import type { BrowserHistory } from 'history';
-import React from 'react';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
-
 import ServiceSelect from './ServiceSelect';
 
-type SubmitEventTarget = EventTarget & {
-  elements: {
-    channel: HTMLInputElement,
-    service: HTMLInputElement
-  }
-};
-
-type Props = {
-  history: BrowserHistory
-};
-
-const HeaderForm = ({ history }: Props) => {
-  const handleSubmit = (event: SyntheticEvent<SubmitEventTarget>) => {
+const HeaderForm = ({ history }) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     const service = event.currentTarget.elements.service.value;
     const channel = event.currentTarget.elements.channel.value;

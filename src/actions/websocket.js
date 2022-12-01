@@ -1,27 +1,20 @@
-// @flow
+import WebSocket from "reconnecting-websocket";
 
-declare var API_WS: string;
-/* global process */
-
-import WebSocket from 'reconnecting-websocket';
-import type { Store } from 'redux';
-
-import history from '../history';
-import { setStream, setAfk } from '.';
-
+import history from "../history";
+import { setStream, setAfk } from ".";
 
 let socket;
 export let emit; // eslint-disable-line one-var
 
 // the types of payloads we can expect from the server
 export const actions = [
-  'AFK_SET',
-  'ERR',
-  'RUSTLERS_SET',
-  'STREAM_SET',
-  'STREAMS_SET',
-  'STREAM_GET',
-  'STREAM_BANNED',
+  "AFK_SET",
+  "ERR",
+  "RUSTLERS_SET",
+  "STREAM_SET",
+  "STREAMS_SET",
+  "STREAM_GET",
+  "STREAM_BANNED",
 ].reduce((acc, curr) => {
   acc[curr] = Symbol(curr);
   return acc;
@@ -29,13 +22,12 @@ export const actions = [
 
 // thunks for these payloads
 const thunks = {
-  RUSTLERS_SET: payload => (dispatch, getState) => {
+  RUSTLERS_SET: (payload) => (dispatch, getState) => {
     const state = getState();
-    const [ id ] = payload;
+    const [id] = payload;
     if (!state.streams[id]) {
-      emit('getStream', id);
-    }
-    else {
+      emit("getStream", id);
+    } else {
       dispatch({
         type: actions.RUSTLERS_SET,
         payload,
@@ -43,7 +35,7 @@ const thunks = {
     }
   },
   STREAM_BANNED: () => (dispatch) => {
-    history.push('/beand');
+    history.push("/beand");
     dispatch({
       type: actions.STREAM_BANNED,
       payload: null,
@@ -60,25 +52,30 @@ const thunks = {
   },
 };
 
-export const init = (store: Store<*, *, *>) => {
-  socket = new WebSocket(API_WS || `ws://${location.host}`, [], {minReconnectionDelay: 1});
+export const init = (store) => {
+  socket = new WebSocket(
+    import.meta.env.VITE_API_WS || `ws://${location.host}`,
+    [],
+    {
+      minReconnectionDelay: 1,
+    }
+  );
   let messageQueue = [];
   let wasReconnect = false;
   emit = (...args) => {
     if (socket.readyState !== 1) {
       messageQueue.push(args);
-    }
-    else {
+    } else {
       socket.send(JSON.stringify(args));
     }
   };
 
-  const ping = () => socket.send('');
+  const ping = () => socket.send("");
   let pingInterval;
 
   socket.onopen = function onopen() {
     pingInterval = setInterval(ping, 20000);
-    messageQueue.forEach(args => emit(...args));
+    messageQueue.forEach((args) => emit(...args));
     messageQueue = [];
     if (wasReconnect) {
       // resend setStream on reconnect if we're watching one
@@ -87,8 +84,7 @@ export const init = (store: Store<*, *, *>) => {
       if (stream) {
         if (stream.overrustle_id) {
           store.dispatch(setStream(stream.overrustle_id));
-        }
-        else {
+        } else {
           store.dispatch(setStream(stream.channel, stream.service));
         }
       }
@@ -101,14 +97,14 @@ export const init = (store: Store<*, *, *>) => {
   };
 
   socket.onmessage = function onmessage(event) {
-    if (process.env.NODE_ENV !== 'production') {
+    if (process.env.NODE_ENV !== "production") {
       // eslint-disable-next-line no-console
-      console.log('socket message', event);
+      console.log("socket message", event);
     }
 
     const { data } = event;
     try {
-      const [ ws_action, ...args ] = JSON.parse(data);
+      const [ws_action, ...args] = JSON.parse(data);
       const action = actions[ws_action];
       // make sure we know what to do with this action
       if (!action) {
@@ -125,10 +121,12 @@ export const init = (store: Store<*, *, *>) => {
           payload: args,
         });
       }
-    }
-    catch (err) {
+    } catch (err) {
       /* eslint-disable-next-line no-console */
-      console.error(`Failed to handle incoming websocket action\n${data}\n`, err);
+      console.error(
+        `Failed to handle incoming websocket action\n${data}\n`,
+        err
+      );
     }
   };
 };

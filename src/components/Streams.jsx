@@ -11,7 +11,7 @@ import {
   showFooter,
 } from '../actions';
 
-import '../css/Streams';
+import '../css/Streams.scss';
 import MainLayout from './MainLayout';
 import StreamThumbnail from './StreamThumbnail';
 

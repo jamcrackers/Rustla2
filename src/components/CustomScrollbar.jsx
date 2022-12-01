@@ -1,31 +1,22 @@
-// @flow
-
-import React from 'react';
-import Scrollbars from 'react-custom-scrollbars';
-
-type RenderProps = { style: $Shape<CSSStyleDeclaration> };
+import { Scrollbars } from "react-custom-scrollbars";
 
 const viewStyle = {
   padding: 1,
 };
 
-function renderView({ style }: RenderProps) {
-  return <div className="box" style={{ ...style, ...viewStyle }} />;
-}
-
-const thumbStyle: $Shape<CSSStyleDeclaration> = {
-  backgroundColor: 'rgb(55, 55, 55)'
+const thumbStyle = {
+  backgroundColor: "rgb(55, 55, 55)",
 };
 
-function renderThumb({ style }: RenderProps) {
-  return <div style={{ ...style, ...thumbStyle }} />;
-}
-
-const ColoredScrollbars = (props: mixed) =>
-  <Scrollbars
-    renderView={renderView}
-    renderThumbVertical={renderThumb}
-    {...props}
-  />;
+const ColoredScrollbars = (props) => <div />;
+// <Scrollbars
+//   renderView={({ style }) => (
+//     <div className="box" style={{ ...style, ...viewStyle }} />
+//   )}
+//   renderThumbVertical={({ style }) => (
+//     <div style={{ ...style, ...thumbStyle }} />
+//   )}
+//   {...props}
+// />
 
 export default ColoredScrollbars;

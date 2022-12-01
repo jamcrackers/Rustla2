@@ -1,22 +1,12 @@
-// @flow
+import MainLayout from "./MainLayout";
 
-import React from 'react';
-import type { BrowserHistory } from 'history';
-
-import MainLayout from './MainLayout';
-
-type Props = {
-  history: BrowserHistory
-};
-
-const Error404 = ({ history }: Props) =>
+const Error404 = ({ history }) => (
   <MainLayout history={history}>
-    <div className='text-center'>
+    <div className="text-center">
       <h1>Strim Not Found</h1>
-      <img src='/image/donger.png' />
+      <img src="/image/donger.png" />
       <h3>Whatever you are looking for, it&#x27;s not here.</h3>
     </div>
   </MainLayout>
-  ;
-
+);
 export default Error404;

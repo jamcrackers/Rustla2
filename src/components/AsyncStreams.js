@@ -1,10 +1,3 @@
-// @flow
-
-import Loadable from './Loadable';
-
-
-const AsyncStreams = Loadable({
-  loader: () => import(/* webpackChunkName: "streams" */ './Streams'),
-});
+const AsyncStreams = await import("./Streams");
 
 export default AsyncStreams;

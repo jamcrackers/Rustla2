@@ -1,29 +1,7 @@
-// @flow
+import React from "react";
+import { useClickAway } from "react-use";
 
-import React from 'react';
-import {useClickAway} from 'react-use';
-import { connect } from 'react-redux';
-import { modifyStream, banViewers } from '../actions';
-
-import '../css/StreamAdminMenu';
-
-type OwnProps = {|
-  id: number;
-  channel: string;
-  service: string;
-  overrustle_id: string,
-  afk: boolean;
-  nsfw: boolean;
-  promoted: boolean;
-  hidden: boolean;
-|};
-
-type DispatchProps = {|
-  modifyStream: typeof modifyStream,
-  banViewers: typeof banViewers;
-|};
-
-type Props = {| ...OwnProps, ...DispatchProps |};
+import "../css/StreamAdminMenu.scss";
 
 const StreamAdminMenu = ({
   id,
@@ -36,15 +14,15 @@ const StreamAdminMenu = ({
   hidden,
   modifyStream,
   banViewers,
-}: Props) => {
+}) => {
   const containerRef = React.useRef();
   const [isOpen, setIsOpen] = React.useState(false);
 
-  const toggleIsOpen = () => setIsOpen(prev => !prev);
+  const toggleIsOpen = () => setIsOpen((prev) => !prev);
   useClickAway(containerRef, () => setIsOpen(false));
 
-  const handleToggleClick = (prop: string, state: boolean) => {
-    modifyStream({channel, service, overrustle_id}, {[prop]: state});
+  const handleToggleClick = (prop, state) => {
+    modifyStream({ channel, service, overrustle_id }, { [prop]: state });
   };
 
   const handleBanClick = () => banViewers(id);
@@ -76,7 +54,4 @@ const StreamAdminMenu = ({
   );
 };
 
-export default connect<Props, OwnProps, any, DispatchProps, any, any>(
-  null,
-  {modifyStream, banViewers},
-)(StreamAdminMenu);
+export default StreamAdminMenu;
