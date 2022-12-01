@@ -13,5 +13,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node }}
-      - run: yarn run vite:build
+      - run: yarn
+      - run: yarn vite:build
       
