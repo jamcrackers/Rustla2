@@ -1,4 +1,4 @@
-# strims.gg
+# strims.gg fork, playing around with vite instead of webpack and some other stuff for fun
 
 Livestream viewing with `strims.gg` chat.
 
@@ -7,7 +7,7 @@ Livestream viewing with `strims.gg` chat.
 First, ensure that you have Node.js (version 12 or greater) and `npm`
 (preferably the latest stable release) installed. Then,
 
-``` bash
+```bash
 $ git clone https://github.com/MemeLabs/Rustla2.git
 $ cd Rustla2/
 $ cp .env.example .env
@@ -28,7 +28,7 @@ $ sed -i "" "s/JWT_SECRET=/JWT_SECRET=$(head -c 22 /dev/urandom | base64 | tr -d
 
 Install dependencies and build the frontend:
 
-``` bash
+```bash
 $ npm ci
 $ npm run build
 ```
@@ -41,19 +41,20 @@ Then, follow the instructions in `api/README.md` for how to start the backend
 Retrieving thumbnails, viewer counts, and live statuses for Twitch streams
 requires a registered Twitch client.
 
-  1. Go to <https://dev.twitch.tv/console/apps/create>
-  2. Name the application whatever you want. The important part is that the
-     **Redirect URI** is set to `$API/oauth`. For example:
+1. Go to <https://dev.twitch.tv/console/apps/create>
+2. Name the application whatever you want. The important part is that the
+   **Redirect URI** is set to `$API/oauth`. For example:
 
-     ![](https://i.imgur.com/hy4ii2c.png)
-  3. Edit `.env` to include your **Redirect URI**, **Client ID**, and **Client
-     Secret**:
+    ![](https://i.imgur.com/hy4ii2c.png)
 
-     ```
-     TWITCH_CLIENT_ID=yourclientid
-     TWITCH_CLIENT_SECRET=yourclientsecret
-     TWITCH_REDIRECT_URI=http://localhost:3000/oauth
-     ```
+3. Edit `.env` to include your **Redirect URI**, **Client ID**, and **Client
+   Secret**:
+
+    ```
+    TWITCH_CLIENT_ID=yourclientid
+    TWITCH_CLIENT_SECRET=yourclientsecret
+    TWITCH_REDIRECT_URI=http://localhost:3000/oauth
+    ```
 
 ## UI dev environment setup
 
@@ -87,6 +88,6 @@ production, except with the additional step of minifying the frontend JavaScript
 code. This reduces the overall size of the bundle that is served to users, which
 can result in faster page loads.
 
-``` bash
+```bash
 npm run build:production
 ```

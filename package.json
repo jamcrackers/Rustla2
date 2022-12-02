@@ -9,6 +9,7 @@
     "scripts": {
         "dev": "vite",
         "vite:build": "vite build",
+        "workflow": "make workflow",
         "clean": "rm -rf public/assets public/index.html",
         "build": "npm run clean && npm run build:bundle",
         "build:bundle": "webpack --progress",
